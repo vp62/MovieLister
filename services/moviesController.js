@@ -1,7 +1,8 @@
 const { json } = require('express');
 const fs = require('fs');
 const util = require('util')
-const path = require('path')
+const path = require('path');
+const { nextTick } = require('process');
 var readFile = util.promisify(fs.readFile);
 var writeFile = util.promisify(fs.writeFile);
 
@@ -54,28 +55,39 @@ class MovieServicer {
         return movies;
     }
     //create movie object
-    async createMovieObject(movie) {
-        var datas = await this.getData();
-        movie.id = datas.movies.length;
-        movie.genres = movie.genres.split(',');
-        movie.actors = movie.actors.split(',');
-        datas.movies.push(movie)
+    async createMovieObject(updatedmovie,moviename) {
+        try { 
+            var datas = await this.getData();
+        var movieindex=datas.movies.findIndex((element) => {element.title==moviename})
+       
+        if(movieindex){
+            datas.movies.splice(movieindex,1,updatedmovie)
+            console.log("only during update")
+        }else
+        {
+        updatedmovie.id=datas.movies.length;
+        datas.movies.push(updatedmovie) 
+        }
+    
         return datas;
+            
+        } catch (error) {
+            return error;
+        }
+       
     }
 
-    async addMoive(movie, file) {
-        const datas = await this.createMovieObject(movie);
+    async addMoive(movie,moviename, file) {
+        const datas = await this.createMovieObject(movie,moviename);
         var moviedata = JSON.stringify(datas);
-        var result = await writeFile(file, moviedata);
-        return datas.movies[datas.movies.length - 1
-        ];
+        await writeFile(file, moviedata);
     }
     async removeMoive(moviename, file) {
         try {
             const datas = await this.getData();
             // console.log(moviename)
            datas.movies= datas.movies.filter(item => item.title != moviename);
-        //    console.log(datas.movies)
+            //console.log(datas.movies)
             var movies = JSON.stringify(datas);
             // console.log(movies)
             var result = await writeFile(file, movies);
@@ -86,31 +98,11 @@ class MovieServicer {
             return err;
         }
     }
-
+    
     //update movie
-    async updateMoive(moviename, movie, file) {
+    async updateMoive( movie,moviename, file) {
         try {
-            const datas = await this.getData();
-
-            datas.movies.forEach(element => {
-                if (element.title == moviename) {
-                    element.title = movie.title;
-                    element.year = movie.year;
-                    element.actors = movie.actors.split(',');
-                    element.genres = movie.genres.split(',');
-                    element.runtime = movie.runtime;
-                    element.plot = movie.plot;
-                    element.posterUrl = movie.posterUrl; return;
-
-                }
-            });
-            // var d=datas.movies.find(item.title==moviename)
-            console.log("datas movies")
-            console.log(datas.movies)
-            var movies = JSON.stringify(datas); console.log(movies);
-
-            var result = await writeFile(file, movies);
-            // return result;
+           await this.addMoive(movie,moviename,file)
         }
         catch (err) {
             return err;

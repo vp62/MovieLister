@@ -39,3 +39,9 @@
 a{
     text-decoration:none;
 }
+form input{
+   background-color: #ffbb00;
+   cursor: pointer;
+   border-radius: 13%;
+   padding: 4px;
+}

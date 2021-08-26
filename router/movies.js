@@ -23,11 +23,12 @@ module.exports = (param) => {
             next(err);
         }
     })
+   
     router.get('/:movie', async (req, res,next) => {
         try {
-            console.log(req.params.movie)
+            console.log(req.params.movie+"from individual movie name")
             var movie = await movieService.getMovieDetails(req.params.movie);
-            console.log(movie)
+            // console.log(movie)
             var cat = await movieService.getGenre();
             res.render('layout', { movies: movie, list: cat, hello: '', content: 'individualMovies', type: req.params.category })
         } catch (err) {
@@ -41,7 +42,7 @@ module.exports = (param) => {
     router.get('/as/addMovies', async (req, res) => {
         try {
             var cat = await movieService.getGenre();
-            res.render('layout', { content: 'newMovie', list: cat, url: "/movies/as/addMovies", method: "POST", movie: { title: '', runtime: '', year: '', geners: [], actors: [], plot: '', posterUrl: '' } })
+            res.render('layout', { content: 'newMovie', list: cat, url: "/movies/as/addMovies", moviename:'', method: "POST", movie: { title: '', runtime: '', year: '', geners: [], actors: [], plot: '', posterUrl: '' } })
         }
         catch (err) {
             console.log('aed')
@@ -57,9 +58,8 @@ module.exports = (param) => {
 
                     throw new Error({ errors: errors.array() });
                 }
-                console.log(`BODY:${req.body}`)
-                const data = await movieService.addMoive(req.body, './Modal/moviedb.json');
-
+                console.log(`BODY:${req.body.title}`)
+                const data = await movieService.addMoive(req.body,req.body.title, './Modal/moviedb.json');
                 res.redirect('/movies')
             }
             catch (err) {
@@ -67,7 +67,7 @@ module.exports = (param) => {
                 res.status(404).send(err)
             }
         })
-    router.get('/:movie/delete', async (req, res) => {
+    router.delete('/:movie', async (req, res) => {
         try {
             console.log(`BODY:${req.body}`)
             const data = await movieService.removeMoive(req.params.movie, './Modal/moviedb.json');
@@ -79,23 +79,24 @@ module.exports = (param) => {
 
     })
 
-    router.get('/:movie/edit', async (req, res) => {
+    router.get('/update/:movie', async (req, res) => {
         try {
             console.log(req.params.movie)
             const data = await movieService.getMovieDetails(req.params.movie)
             console.log(data)
-            res.render('layout', { movie: data, content: 'newMovie', url: `/movies/update/${req.params.movie}`, method: "POST" })
+            res.render('layout', { movie: data, moviename:req.params.movie,content: 'newMovie', url: `/movies/${req.params.movie}?_method=PUT`, method: "POST" })
         }
         catch (err) {
             res.status(404).send(err);
         }
 
     })
-    router.post('/update/:movie', async (req, res) => {
+    router.put('/:movie', async (req, res) => {
         try {
+            console.log("put")
             console.log(req.params.movie)
-            const data = await movieService.updateMoive(req.params.movie, req.body, './Modal/moviedb.json')
-            console.log(data)
+            const data = await movieService.updateMoive(req.body,req.params.movie, './Modal/moviedb.json')
+            console.log(data+"put data")
             res.redirect('/movies')
             // res.render('layout',{movie:data,content:'newMovie',url: "/movies/as/updateMovies",method:"POST" })
         }

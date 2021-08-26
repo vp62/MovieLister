@@ -8,8 +8,12 @@
                 <h3><%=movie.title%></h3>
                 <h3><%=movie.director%></h3>
                 <h3><%=movie.year%></h3>
-                <h3><a name="moviename"href="/movies/<%=movie.title%>/delete">delete</a></h3>
-                <h3><a name="moviename"href="/movies/<%=movie.title%>/edit">Update</a></h3>
+                <form  action="/movies/<%=movie.title%>?_method=DELETE" method="post">
+                    <a href=""><input type="submit" name="_method" value="DELETE"></a>
+                    </form>
+                  <a href="/movies/update/<%=movie.title%>"> Upadte</a>
+                    
+                
             </div>
         </a>
         

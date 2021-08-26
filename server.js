@@ -3,12 +3,12 @@ var app = express();
 const path = require('path')
 var Router = require('./router/indexRouter')
 // var moviesRoutes=require('./router/movies')
-
+const methodOverride = require('method-override');
 const movieServicer = require('./services/moviesController');
 const indexRouter = require('./router/indexRouter');
 const { render } = require('ejs');
 
-
+app.use(methodOverride('_method'));
 var categoryService = new movieServicer('./Modal/moviedb.json');
 var movieService = new movieServicer('./Modal/moviedb.json');
 
