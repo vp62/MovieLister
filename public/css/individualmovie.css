@@ -1,0 +1,27 @@
+.movie{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.movie div{
+    width:50%;
+    background:#222;
+
+}
+.movie div img{
+  margin: 10% 25% 0;
+}
+.movie h3{
+    text-align: center;
+    color: whitesmoke;
+}
+.movie h4{
+    margin-left: 10%;
+    color: rgb(205, 216, 216);
+    text-align: justify;
+}
+.movie span{
+    
+    color: rgb(79, 207, 54);
+}

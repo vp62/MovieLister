@@ -1,0 +1,17 @@
+<nav>
+    <a href="/">Home</a>
+     <a href="/movies">Movies</a>
+     <a href="/movies/as/addMovies">New Movies<i class="fa fa-plus" aria-hidden="true"></i></a>
+     
+     
+     <div class="dropdown">
+       <button class="dropbtn">Category
+         <i class="fa fa-caret-down"></i>
+       </button>
+       <div class="dropdown-content">
+           <%list.forEach(item=>{%>    
+               <a href="/category/<%=item%>"><%=item%></a>
+           <%})%>
+       </div>
+     </div> 
+   </nav>

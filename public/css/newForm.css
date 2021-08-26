@@ -1,0 +1,17 @@
+body{
+    background-color: #222;
+    color: aliceblue;
+}
+form{
+    display: flex;
+    flex-flow: row wrap;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+    align-items: stretch;
+    flex-direction: column;
+}
+form input{
+    border-radius: 3px;
+    margin-bottom: 2px;
+}

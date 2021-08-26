@@ -1,0 +1,34 @@
+
+
+
+    <link rel="stylesheet" href="/css/newForm.css">
+
+<form action="<%=url%>" method="<%=method%>">
+
+    <label for="title">Title</label>
+    <input type="text" id="title" name="title" value="<%=movie.title%>">
+
+    <label for="year">Year</label>
+    <input type="text" id="year" name="year" value="<%=movie.year%>">
+
+    <label for="runtime">runtime</label>
+    <input type="number" id="number" name="runtime" value="<%=movie.runtime%>">
+
+    <label for="genres">genres</label>
+    <textarea name="genres" id="genres" cols="10" rows="3" value="<%=movie.genres%>"></textarea>
+
+    <label for="director">director</label>
+    <input type="text" id="director" name="director"value="<%=movie.director%>">
+
+    <label for="actors">actors</label>
+    <textarea name="actors" id="actors" cols="10" rows="3" value="<%=movie.actors%>"></textarea>
+
+    <label for="plot">plot</label>
+    <input type="text" id="plot" name="plot" value="<%=movie.plot%>">
+
+    <label for="posterUrl">PosterUrl</label>
+    <input type="url" id="posterUrl" name="posterUrl" value="<%=movie.posterUrl%>">
+
+    <input type="submit" value="upload">
+
+</form>
