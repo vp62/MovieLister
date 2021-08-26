@@ -18,7 +18,7 @@ module.exports = (param) => {
 
         catch (err) {
             console.log("error in hands")
-            console.log(err.message)
+            // console.log(err.message)
             err.status = 404;
             next(err)
         }

@@ -85,12 +85,10 @@ class MovieServicer {
     async removeMoive(moviename, file) {
         try {
             const datas = await this.getData();
-            // console.log(moviename)
-           datas.movies= datas.movies.filter(item => item.title != moviename);
-            //console.log(datas.movies)
-            var movies = JSON.stringify(datas);
-            // console.log(movies)
-            var result = await writeFile(file, movies);
+            var index=datas.movies.findIndex(item=>item.title==moviename);
+            console.log(index)
+            datas.movies.splice(index,1)
+            var result = await writeFile(file, JSON.stringify(datas));
             console.log("successfully deleted")
             return result;
         }

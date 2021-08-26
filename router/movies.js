@@ -19,7 +19,7 @@ module.exports = (param) => {
             const movies = await movieService.getAllMovies();
             res.render('layout', { list: cat, movies: movies, hello: "", content: 'movies' })
         } catch (err) {
-            // res.status(404).send(err)
+            console.log("error here");
             next(err);
         }
     })
@@ -83,7 +83,7 @@ module.exports = (param) => {
         try {
             console.log(req.params.movie)
             const data = await movieService.getMovieDetails(req.params.movie)
-            console.log(data)
+            // console.log(data)
             res.render('layout', { movie: data, moviename:req.params.movie,content: 'newMovie', url: `/movies/${req.params.movie}?_method=PUT`, method: "POST" })
         }
         catch (err) {

@@ -15,7 +15,7 @@ module.exports = (params) => {
     })
     indexRouter.get('/', async (req, res) => {
         var data = await movieService.getGenre();
-        console.log(data)
+        // console.log(data)
         res.render('layout', { list: data, movies: '', hello: "Heloo", content: "home" })
     })
     indexRouter.use('/movies', movieRouter(params))

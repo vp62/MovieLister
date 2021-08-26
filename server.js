@@ -2,11 +2,9 @@ const express = require('express')
 var app = express();
 const path = require('path')
 var Router = require('./router/indexRouter')
-// var moviesRoutes=require('./router/movies')
 const methodOverride = require('method-override');
 const movieServicer = require('./services/moviesController');
 const indexRouter = require('./router/indexRouter');
-const { render } = require('ejs');
 
 app.use(methodOverride('_method'));
 var categoryService = new movieServicer('./Modal/moviedb.json');
@@ -37,10 +35,10 @@ app.use((req, res, next) => {
 })
 
 app.use((err, req, res, next) => {
-  // res.status(err.status || 500)
   console.log("error")
-  // console.log(err.status)
   if (err.status != 404) {
+    res.locals.status=err.status;
+    res.locals.message=err.message;
     return res.render('error')
   }
   console.log(res.locals.list)
