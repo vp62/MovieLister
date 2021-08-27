@@ -29,10 +29,10 @@ class MovieServicer {
                 return element;
             }
         });
-        if (typeof movies != 'undefined' && movies != null && movies.length > 0) {
+        if (typeof (movies) != undefined && movies != null && movies.length > 0) {
             return movies;
         }
-        else if (!datas.genres.includes()) {
+        else if (!datas.genres.includes(name)) {
             throw new Error(`No Category Exit like this ${name}`)
         }
         else {
@@ -57,15 +57,18 @@ class MovieServicer {
     //create movie object
     async createMovieObject(updatedmovie,moviename) {
         try { 
+            console.log(updatedmovie)
             var datas = await this.getData();
         var movieindex=datas.movies.findIndex((element) => {element.title==moviename})
        
-        if(movieindex){
+        if(movieindex>=0){
+            updatedmovie.id=datas.movies[movieindex].id||datas.movies.length+1;
             datas.movies.splice(movieindex,1,updatedmovie)
             console.log("only during update")
         }else
         {
-        updatedmovie.id=datas.movies.length;
+            console.log("only new comes");
+        updatedmovie.id=datas.movies.length+1;
         datas.movies.push(updatedmovie) 
         }
     
@@ -90,7 +93,7 @@ class MovieServicer {
             datas.movies.splice(index,1)
             var result = await writeFile(file, JSON.stringify(datas));
             console.log("successfully deleted")
-            return result;
+            return {delete:true,movie:moviename};
         }
         catch (err) {
             return err;

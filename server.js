@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   let err = new Error("file Not Found")
   err.status = 404
   err.message = "sorry this was an temporary issue we are trying to resolve it"
-  console.log(`call next with error ${err}`)
+  // console.log(`call next with error ${err}`)
   console.log('1st use')
   next(err)
 })

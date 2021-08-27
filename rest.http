@@ -1,0 +1,6 @@
+GET http://localhost:3000/movies/api/all
+###
+GET http://localhost:3000/movies/api/Ratatouille
+
+###
+DELETE http://localhost:3000/movies/api/sdf

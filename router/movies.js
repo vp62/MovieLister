@@ -3,13 +3,15 @@ const router = express.Router();
 const { body, validationResult, check } = require('express-validator');
 const movieServicer = require('../services/moviesController')
 const path = require('path');
+const apiRouter=require('./API Router/APIRouter')
+
 const { error } = require('console');
 const { json } = require('express');
 var movieService = new movieServicer('./Modal/moviedb.json');
 
 module.exports = (param) => {
     router.use(express.static(path.join('public')))
-
+    router.use('/api',apiRouter(param))
     var { movieService } = param;
 
 
